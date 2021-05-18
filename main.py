@@ -10,6 +10,7 @@ jerma_sus_path = os.path.join(assets, 'jermasus.jpeg')
 jerma2 = os.path.join(assets, 'jerma2.jpg')
 jerma3 = os.path.join(assets, 'jerma3.jpg')
 jerma4 = os.path.join(assets, 'jerma4.jpg')
+preggo = os.path.join(assets, 'preggo.jpg')
 
 
 on_menu = True
