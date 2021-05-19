@@ -1,7 +1,7 @@
 # Introduction
 <br>
 
-This is a very very shitposting type RPG(Role Playing Game) game based upon the famous multiplayer game called Among Us. In this game, you play as Yellow with Cyan, Red, and Blue. However there is an imposter among you who is trying to kill all of you. There are a total of 9 endings, in which 6 are bad, while 3 are good. Will you survive? or will you be a victim to the imposter? Play to find out!
+This is a very very shitposting type RPG (Role Playing Game) based upon the famous multiplayer game called Among Us. In this game, you play as Yellow with Cyan, Red, and Blue. However there is an imposter among you who is trying to kill all of you. There are a total of 9 endings, in which 6 are bad, while 3 are good. Will you survive? or will you be a victim to the imposter? Play to find out!
 
 <br>
 
@@ -18,9 +18,9 @@ You should have preinstalled python, pip, and git. You can install python and pi
 
 Just run the following commands in the command prompt/terminal and you should be good to go:
 ```
-pip install easygui
 git clone https://github.com/stupid-melon/amogus
 cd amogus
+pip install -r requirements.txt
 python main.py
 ```
 (Replace `pip` with `pip3`, and `python` with `python3` if you are on a mac or linux)
