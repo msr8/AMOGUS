@@ -9,7 +9,7 @@ This is a very very shitposting type RPG (Role Playing Game) based upon the famo
 ## Pip and Git
 <br>
 
-You should have preinstalled python, pip, and git. You can install python and pip together in the latest version of [python](https://www.python.org/downloads/). As for git, you can download it from [here](https://git-scm.com/). If you are on Mac, you can simply run `git --version` in terminal. If you are on Linux, you can simply run `sudo apt install git` in the terminal
+You should have preinstalled python, pip, and git. You can install python and pip together in the latest version of [python](https://www.python.org/downloads/). As for git, you can download it from [here](https://git-scm.com/download/. If you are on Mac, you can simply run `git --version` in terminal. If you are on Linux, you can simply run `sudo apt-get install git` in the terminal
 
 <br>
 
@@ -21,7 +21,7 @@ Just run the following commands in the command prompt/terminal and you should be
 git clone https://github.com/stupid-melon/amogus
 cd amogus
 pip install -r requirements.txt
-python main.py
+python amogus.py
 ```
 (Replace `pip` with `pip3`, and `python` with `python3` if you are on a mac or linux)
 
