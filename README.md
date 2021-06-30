@@ -9,7 +9,7 @@ This is a very very shitposting type RPG (Role Playing Game) based upon the famo
 ## Pip and Git
 <br>
 
-You should have preinstalled python, pip, and git. You can install python and pip together in the latest version of [python](https://www.python.org/downloads/). As for git, you can download it from [here](https://git-scm.com/download/. If you are on Mac, you can simply run `git --version` in terminal. If you are on Linux, you can simply run `sudo apt-get install git` in the terminal
+You should have preinstalled python, pip, and git. You can install python and pip together in the latest version of [python](https://www.python.org/downloads/). As for git, you can download it from [here](https://git-scm.com/download/). If you are on Mac, you can simply run `git --version` in terminal. If you are on Linux, you can simply run `sudo apt-get install git` in the terminal
 
 <br>
 
