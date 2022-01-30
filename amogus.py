@@ -1,5 +1,3 @@
-# from playsound import playsound
-import threading as thr
 import requests as rq
 import platform as pf
 import getpass as gp
