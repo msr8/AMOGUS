@@ -1,13 +1,42 @@
 from rich import print as printf
+import requests as rq
 import easygui as eg
 
 from script import ENDING_1, ENDING_2, ENDING_3, ENDING_4, ENDING_5, ENDING_6, ENDING_7, ENDING_8, ENDING_9, HELP_TEXT
+import platform as pf
+import getpass as gp
+import json
+import os
 
 
 
- 
+
+def get_user(system: str):
+    """
+    Get the user name of the current user
+    
+    :param system: The system obained by platform.system()
+    :type system: str
+    :return: The name of the user.
+    """
+    try:
+        ret = gp.getuser()
+    except:
+        try:
+            temp_list = os.getcwd().split(os.path.sep)
+            ret = temp_list[ temp_list.index('Users') + 1 ]
+        except:
+            try:
+                temp_list = __file__.split(os.path.sep)
+                ret = temp_list[ temp_list.index('Users') + 1 ]
+            except:
+                ret = 'Unable to determine'
+    return ret
 
 logchc = lambda node, chc:    printf(f'[grey50][b][{node}][/] {chc}[/]')
+
+
+
 
 
 
@@ -39,7 +68,7 @@ def node2():
 def node3():
     chc = eg.buttonbox('You walk into admin and what you see next shocks you........' , choices=['Continue'], title='Node 3')
     if not chc:                             exit()
-    chc = eg.buttonbox('You see the imposter standing next to the body! Do you report the body, run away, or try to convince the imposter not to kill you?', choices=['Report', 'Run', 'Convince'], title='Node 3')
+    chc = eg.buttonbox('You see the imposter standing next to the body! Do you report the body, run away, or try to convince the imposter not to kill you?', choices=['Report', 'Run', 'Convince'], title='Node 3', images=assets['chadimpo'])
     logchc('NODE 3', chc)
     if chc == 'Report':                     node4()
     if chc == 'Run':                        node5()
@@ -72,8 +101,9 @@ def node6():
     elif chc == 'Vote Red':                 node8()
 
 def node7():
-    for i in ENDING_3[:-1]:
-        chc = eg.buttonbox(i, choices=['Continue'], title='Node 7')
+    for i, elem in enumerate(ENDING_3[:-1]):
+        img = assets['preggo'] if i == 1 else None
+        chc = eg.buttonbox(elem, choices=['Continue'], title='Node 7', images=img)
         if not chc:                         exit()
     chc = eg.buttonbox(ENDING_3[-1], choices=['Home', 'Play Again', 'Exit'], title='Node 7')
     logchc('NODE 7', chc)
@@ -81,8 +111,9 @@ def node7():
     elif chc == 'Play Again':               node1()
 
 def node8():
-    for i in ENDING_4[:-1]:
-        chc = eg.buttonbox(i, choices=['Continue'], title='Node 8')
+    for i, elem in enumerate(ENDING_4[:-1]):
+        img = assets['pepe'] if i == 1 else None
+        chc = eg.buttonbox(elem, choices=['Continue'], title='Node 8', images=img)
         if not chc:                         exit()
     chc = eg.buttonbox(ENDING_4[-1], choices=['Home', 'Play Again', 'Exit'], title='Node 8')
     logchc('NODE 8', chc)
@@ -138,12 +169,13 @@ are staring at each other, you know you are dead, you know you fucked up. But be
     if not chc:                             exit()
     chc = eg.buttonbox('Its JERMA SUS!!', choices=['Continue'], title='Node 13')
     if not chc:                             exit()
-    chc = eg.buttonbox('He slowly sucks the life out of Red and Blue while you just watch, frozen by fear, unable to move', choices=['Continue'], title='Node 13')
+    chc = eg.buttonbox('He slowly sucks the life out of Red and Blue while you just watch, frozen by fear, unable to move', choices=['Continue'], title='Node 13', images=assets['jerma2'])
     if not chc:                             exit()
     chc = eg.buttonbox('He faces you and starts sucking the life out of you. You realise this is the end, this is how you die. You struggle to fight him but keep \
-failing', choices=['Continue'], title='Node 13')
+failing', choices=['Continue'], title='Node 13', assets=assets['jerma3'])
+    if not chc:                             exit()
     chc = eg.buttonbox('You can barely move anymore. Suddenly, a red pill appears behind SUS. Do you try and grab the red pill, or do you give up to your fate?',
-choices=['Give up', 'Try to grab the pill'], title='Node 13')
+choices=['Give up', 'Try to grab the pill'], title='Node 13', assets=assets['jerma4'])
     logchc('NODE 13', chc)
     if chc == 'Give up':                    node14()
     elif chc == 'Try to grab the pill':     node15()
@@ -158,8 +190,12 @@ def node14():
     elif chc == 'Play Again':               node1()
 
 def node15():
-    for i in ENDING_9[:-1]:
-        chc = eg.buttonbox(i, choices=['Continue'], title='Node 15')
+    for i, elem in enumerate(ENDING_9[:-1]):
+        img = assets['jermasus']           if i == 1 else None
+        img = assets['dababy']             if i == 2 else None
+        img = assets['dababy_convertible'] if i == 4 else None
+        img = assets['jermadying']         if i == 5 else None
+        chc = eg.buttonbox(elem, choices=['Continue'], title='Node 15', images=img)
         if not chc:                         exit()
     chc = eg.buttonbox(ENDING_9[-1], choices=['Home', 'Play Again', 'Exit'], title='Node 15')
     logchc('NODE 15', chc)
@@ -176,6 +212,72 @@ def node15():
 
 
 
+
+
+
+def get_config_dir(SYSTEM):
+    if SYSTEM == 'Windows':
+        return ''
+    else:
+        home = os.getenv('HOME')
+        return os.path.join( home , '.config' , 'amogus' )
+
+cls = lambda: os.system('cls') if os.name == 'nt' else os.system('clear')
+cls()
+
+
+
+
+
+
+
+
+IMAGE_NAMES = [
+    'chadimpo.png',
+    'dababy.png',
+    'dababy_convertible.png',
+    'jerma2.png',
+    'jerma3.png',
+    'jerma4.png',
+    'jermadying.png',
+    'jermasus.png',
+    'pepe.png',
+    'preggo.png'
+]
+
+# Gets all the directories and stuff
+SYSTEM = pf.system()
+CONFIG_DIR = get_config_dir(SYSTEM)
+CONFIG_FILE = os.path.join(CONFIG_DIR, 'config.json')
+ASSETS_DIR = os.path.join(CONFIG_DIR, 'assets')
+VISUAL_ASSETS_DIR = os.path.join(ASSETS_DIR, 'visual')
+AUDIO_ASSETS_DIR = os.path.join(ASSETS_DIR, 'audio')
+# Makes them
+for i in [CONFIG_DIR, ASSETS_DIR, VISUAL_ASSETS_DIR, AUDIO_ASSETS_DIR]: os.makedirs(i, exist_ok=True)
+
+# Checks for config.json
+if os.path.isfile(CONFIG_FILE):
+    printf(f'[gray50][b][LOG][/] Loading [u]{CONFIG_FILE}[/]')
+    with open(CONFIG_FILE, 'r') as f:    CONFIG = json.load(f)
+else:
+    printf(f'[gray50][b][LOG][/] Creating [u]{CONFIG_FILE}[/]')
+    CONFIG = {'sound': True}
+    with open(CONFIG_FILE, 'w') as f:    json.dump(CONFIG, f)
+
+# Downloads them if not present
+assets = {}
+for img in IMAGE_NAMES:
+    fp = os.path.join(VISUAL_ASSETS_DIR, f'{img}')
+    if not os.path.isfile(fp):
+        printf(f'[gray50][b][LOG][/] Downloading [u]{fp}[/]')
+        with open(fp, 'wb') as f:    f.write(rq.get(f'https://raw.githubusercontent.com/msr8/amogus/master/assets/visual/{img}').content)
+    key = img.strip('.png')
+    assets[key] = fp
+printf(f'[gray50][b][LOG][/] {json.dumps(assets, indent=2)}')
+
+
+
+printf(f'\n\n[green1]---------- STARTING THE GAME ----------[/]\n\n')
 home()
 
 
@@ -184,7 +286,6 @@ home()
 -> Images
 -> Sounds
 -> Tkinter
--> Ending func
 '''
 
 '''
