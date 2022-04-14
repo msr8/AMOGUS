@@ -217,7 +217,8 @@ def node15():
 
 def get_config_dir(SYSTEM):
     if SYSTEM == 'Windows':
-        return ''
+        home = os.getenv('LOCALAPPDATA')
+        return os.path.join( home , 'Amogus' )
     else:
         home = os.getenv('HOME')
         return os.path.join( home , '.config' , 'amogus' )
