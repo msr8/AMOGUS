@@ -167,15 +167,15 @@ def node13():
 are staring at each other, you know you are dead, you know you fucked up. But before he could harm either of you, something appears in the ship which shocks all \
 3 of you........', choices=['Continue'], title='Node 13')
     if not chc:                             exit()
-    chc = eg.buttonbox('Its JERMA SUS!!', choices=['Continue'], title='Node 13')
+    chc = eg.buttonbox('Its JERMA SUS!!', choices=['Continue'], title='Node 13', images=assets['jermasus'])
     if not chc:                             exit()
     chc = eg.buttonbox('He slowly sucks the life out of Red and Blue while you just watch, frozen by fear, unable to move', choices=['Continue'], title='Node 13', images=assets['jerma2'])
     if not chc:                             exit()
     chc = eg.buttonbox('He faces you and starts sucking the life out of you. You realise this is the end, this is how you die. You struggle to fight him but keep \
-failing', choices=['Continue'], title='Node 13', assets=assets['jerma3'])
+failing', choices=['Continue'], title='Node 13', images=assets['jerma3'])
     if not chc:                             exit()
     chc = eg.buttonbox('You can barely move anymore. Suddenly, a red pill appears behind SUS. Do you try and grab the red pill, or do you give up to your fate?',
-choices=['Give up', 'Try to grab the pill'], title='Node 13', assets=assets['jerma4'])
+choices=['Give up', 'Try to grab the pill'], title='Node 13', images=assets['jerma4'])
     logchc('NODE 13', chc)
     if chc == 'Give up':                    node14()
     elif chc == 'Try to grab the pill':     node15()
@@ -191,10 +191,10 @@ def node14():
 
 def node15():
     for i, elem in enumerate(ENDING_9[:-1]):
-        img = assets['jermasus']           if i == 1 else None
-        img = assets['dababy']             if i == 2 else None
-        img = assets['dababy_convertible'] if i == 4 else None
-        img = assets['jermadying']         if i == 5 else None
+        if i == 2:      img = assets['dababy']
+        elif i == 4:    img = assets['dababy_convertible']
+        elif i == 5:    img = assets['jermadying']
+        else:           img = None
         chc = eg.buttonbox(elem, choices=['Continue'], title='Node 15', images=img)
         if not chc:                         exit()
     chc = eg.buttonbox(ENDING_9[-1], choices=['Home', 'Play Again', 'Exit'], title='Node 15')
@@ -237,6 +237,7 @@ IMAGE_NAMES = [
     'chadimpo.png',
     'dababy.png',
     'dababy_convertible.png',
+    'deathscreen.png',
     'jerma2.png',
     'jerma3.png',
     'jerma4.png',
@@ -272,7 +273,7 @@ for img in IMAGE_NAMES:
     if not os.path.isfile(fp):
         printf(f'[gray50][b][LOG][/] Downloading [u]{fp}[/]')
         with open(fp, 'wb') as f:    f.write(rq.get(f'https://raw.githubusercontent.com/msr8/amogus/master/assets/visual/{img}').content)
-    key = img.strip('.png')
+    key = img[:-4]
     assets[key] = fp
 printf(f'[gray50][b][LOG][/] {json.dumps(assets, indent=2)}')
 
@@ -284,7 +285,7 @@ home()
 
 
 '''
--> Images
+-> You died
 -> Sounds
 -> Tkinter
 '''
