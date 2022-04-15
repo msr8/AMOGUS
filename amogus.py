@@ -2,7 +2,7 @@ from rich import print as printf
 import requests as rq
 import easygui as eg
 
-from script import ENDING_1, ENDING_2, ENDING_3, ENDING_4, ENDING_5, ENDING_6, ENDING_7, ENDING_8, ENDING_9, HELP_TEXT
+from endings import ENDING_1, ENDING_2, ENDING_3, ENDING_4, ENDING_5, ENDING_6, ENDING_7, ENDING_8, ENDING_9, HELP_TEXT
 import platform as pf
 import getpass as gp
 import json
