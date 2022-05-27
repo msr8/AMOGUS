@@ -1,37 +1,17 @@
 from rich import print as printf
+from playsound import playsound
 import requests as rq
 import easygui as eg
 
 from endings import ENDING_1, ENDING_2, ENDING_3, ENDING_4, ENDING_5, ENDING_6, ENDING_7, ENDING_8, ENDING_9, HELP_TEXT
+import threading as thr
 import platform as pf
-import getpass as gp
 import json
 import os
 
 
 
 
-def get_user(system: str):
-    """
-    Get the user name of the current user
-    
-    :param system: The system obained by platform.system()
-    :type system: str
-    :return: The name of the user.
-    """
-    try:
-        ret = gp.getuser()
-    except:
-        try:
-            temp_list = os.getcwd().split(os.path.sep)
-            ret = temp_list[ temp_list.index('Users') + 1 ]
-        except:
-            try:
-                temp_list = __file__.split(os.path.sep)
-                ret = temp_list[ temp_list.index('Users') + 1 ]
-            except:
-                ret = 'Unable to determine'
-    return ret
 
 logchc = lambda node, chc:    printf(f'[grey50][b][{node}][/] {chc}[/]')
 
@@ -223,6 +203,10 @@ def get_config_dir(SYSTEM):
         home = os.getenv('HOME')
         return os.path.join( home , '.config' , 'amogus' )
 
+def play_audio(fp):
+    thread = thr.Thread(target=lambda fp: playsound(fp), args=(fp))
+    thread.start()
+
 cls = lambda: os.system('cls') if os.name == 'nt' else os.system('clear')
 cls()
 
@@ -233,54 +217,71 @@ cls()
 
 
 
-IMAGE_NAMES = [
-    'chadimpo.png',
-    'dababy.png',
-    'dababy_convertible.png',
-    'deathscreen.png',
-    'jerma2.png',
-    'jerma3.png',
-    'jerma4.png',
-    'jermadying.png',
-    'jermasus.png',
-    'pepe.png',
-    'preggo.png'
-]
 
-# Gets all the directories and stuff
-SYSTEM = pf.system()
-CONFIG_DIR = get_config_dir(SYSTEM)
-CONFIG_FILE = os.path.join(CONFIG_DIR, 'config.json')
-ASSETS_DIR = os.path.join(CONFIG_DIR, 'assets')
-VISUAL_ASSETS_DIR = os.path.join(ASSETS_DIR, 'visual')
-AUDIO_ASSETS_DIR = os.path.join(ASSETS_DIR, 'audio')
-# Makes them
-for i in [CONFIG_DIR, ASSETS_DIR, VISUAL_ASSETS_DIR, AUDIO_ASSETS_DIR]: os.makedirs(i, exist_ok=True)
+if __name__ == '__main__':
 
-# Checks for config.json
-if os.path.isfile(CONFIG_FILE):
-    printf(f'[gray50][b][LOG][/] Loading [u]{CONFIG_FILE}[/]')
-    with open(CONFIG_FILE, 'r') as f:    CONFIG = json.load(f)
-else:
-    printf(f'[gray50][b][LOG][/] Creating [u]{CONFIG_FILE}[/]')
-    CONFIG = {'sound': True}
-    with open(CONFIG_FILE, 'w') as f:    json.dump(CONFIG, f)
+    IMAGE_NAMES = [
+        'chadimpo.png',
+        'dababy.png',
+        'dababy_convertible.png',
+        'deathscreen.png',
+        'jerma2.png',
+        'jerma3.png',
+        'jerma4.png',
+        'jermadying.png',
+        'jermasus.png',
+        'pepe.png',
+        'preggo.png'
+    ]
+    AUDIO_NAMES = [
+        'start.mp3'
+    ]
 
-# Downloads them if not present
-assets = {}
-for img in IMAGE_NAMES:
-    fp = os.path.join(VISUAL_ASSETS_DIR, f'{img}')
-    if not os.path.isfile(fp):
-        printf(f'[gray50][b][LOG][/] Downloading [u]{fp}[/]')
-        with open(fp, 'wb') as f:    f.write(rq.get(f'https://raw.githubusercontent.com/msr8/amogus/master/assets/visual/{img}').content)
-    key = img[:-4]
-    assets[key] = fp
-printf(f'[gray50][b][LOG][/] {json.dumps(assets, indent=2)}')
+    # Gets all the directories and stuff
+    SYSTEM = pf.system()
+    CONFIG_DIR = get_config_dir(SYSTEM)
+    CONFIG_FILE = os.path.join(CONFIG_DIR, 'config.json')
+    ASSETS_DIR = os.path.join(CONFIG_DIR, 'assets')
+    VISUAL_ASSETS_DIR = os.path.join(ASSETS_DIR, 'visual')
+    AUDIO_ASSETS_DIR = os.path.join(ASSETS_DIR, 'audio')
+    # Makes them
+    for i in [CONFIG_DIR, ASSETS_DIR, VISUAL_ASSETS_DIR, AUDIO_ASSETS_DIR]:    os.makedirs(i, exist_ok=True)
+
+    # Checks for config.json
+    if os.path.isfile(CONFIG_FILE):
+        printf(f'[gray50][b][LOG][/] Loading [u]{CONFIG_FILE}[/]')
+        with open(CONFIG_FILE, 'r') as f:    CONFIG = json.load(f)
+    else:
+        printf(f'[gray50][b][LOG][/] Creating [u]{CONFIG_FILE}[/]')
+        CONFIG = {'sound': True}
+        with open(CONFIG_FILE, 'w') as f:    json.dump(CONFIG, f)
+
+    # Downloads assets if not present
+    assets = {}
+    for img in IMAGE_NAMES:
+        fp = os.path.join(VISUAL_ASSETS_DIR, f'{img}')
+        if not os.path.isfile(fp):
+            printf(f'[gray50][b][LOG][/] Downloading [u]{fp}[/]')
+            with open(fp, 'wb') as f:    f.write(rq.get(f'https://raw.githubusercontent.com/msr8/amogus/master/assets/visual/{img}').content)
+        key = img[:-4]
+        assets[key] = fp
+    
+    for audio in IMAGE_NAMES:
+        fp = os.path.join(AUDIO_ASSETS_DIR, f'{img}')
+        if not os.path.isfile(fp):
+            printf(f'[gray50][b][LOG][/] Downloading [u]{fp}[/]')
+            with open(fp, 'wb') as f:    f.write(rq.get(f'https://raw.githubusercontent.com/msr8/amogus/master/assets/audio/{img}').content)
+        key = img[:-4]
+        assets[key] = fp
+    
+    printf(f'[gray50][b][LOG][/] {json.dumps(assets, indent=2)}')
+
+    printf(f'\n\n[green1]---------- STARTING THE GAME ----------[/]\n\n')
 
 
 
-printf(f'\n\n[green1]---------- STARTING THE GAME ----------[/]\n\n')
-home()
+
+    home()
 
 
 
