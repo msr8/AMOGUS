@@ -23,6 +23,7 @@ logchc = lambda node, chc:    printf(f'[grey50][b][{node}][/] {chc}[/]')
 
 
 def home():
+    playsound(assets['start'])
     chc = eg.buttonbox('What do ya wanna do', choices=['Play', 'Info', 'Exit'], title='Home')
     logchc('HOME', chc)
     if chc == 'Play':                       node1()
@@ -204,7 +205,7 @@ def get_config_dir(SYSTEM):
         return os.path.join( home , '.config' , 'amogus' )
 
 def play_audio(fp):
-    thread = thr.Thread(target=lambda fp: playsound(fp), args=(fp))
+    thread = thr.Thread(target=lambda fp: playsound(fp, block=False), args=(fp))
     thread.start()
 
 cls = lambda: os.system('cls') if os.name == 'nt' else os.system('clear')
@@ -266,12 +267,12 @@ if __name__ == '__main__':
         key = img[:-4]
         assets[key] = fp
     
-    for audio in IMAGE_NAMES:
-        fp = os.path.join(AUDIO_ASSETS_DIR, f'{img}')
+    for audio in AUDIO_NAMES:
+        fp = os.path.join(AUDIO_ASSETS_DIR, f'{audio}')
         if not os.path.isfile(fp):
             printf(f'[gray50][b][LOG][/] Downloading [u]{fp}[/]')
-            with open(fp, 'wb') as f:    f.write(rq.get(f'https://raw.githubusercontent.com/msr8/amogus/master/assets/audio/{img}').content)
-        key = img[:-4]
+            with open(fp, 'wb') as f:    f.write(rq.get(f'https://raw.githubusercontent.com/msr8/amogus/master/assets/audio/{audio}').content)
+        key = audio[:-4]
         assets[key] = fp
     
     printf(f'[gray50][b][LOG][/] {json.dumps(assets, indent=2)}')
